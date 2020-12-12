@@ -26,4 +26,5 @@ The script should take care of setting up `v4l2loopback` (**need root privileges
 The `X` is your device index.
 
 ## Todo
-I'm working on a way to use the script without the need of any kinda of app installed using only a USB connection, but at the moment I don't have the performance I wanted. Suggestions are also appreciated =D.
+* Increase performance.
+* Make it easier to use.
