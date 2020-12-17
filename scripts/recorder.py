@@ -15,7 +15,7 @@ gi.require_version('Gtk', '3.0')
 
 signal(SIGPIPE, SIG_DFL)
 
-win_name = "VLC media player"
+win_name = "test.mkv - VLC media player"
 
 
 def get_xid(win_name):

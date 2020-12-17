@@ -1,12 +1,15 @@
 ## Description
-This is a small python3 script to create a virtual webcam using your smartphone, it uses `v4l2loopback` and `ffmpeg`. At currently state only works on Linux and need a third-party application to make the communication between your phone and PC.
+Simple `python` script to create a virtual webcam using a smartphone, it uses `v4l2loopback` and `ffmpeg`. At currently state only works on Linux and need a third-party application to make the communication between your phone and PC.
 
 ## Installation
-Since the script is pretty simple you don't need to install anything other than the dependencies. It's required recent 'python3' version and [v4l2loopback](https://github.com/umlaeute/v4l2loopback), `ffmpeg` and `xorg-xprop` probably are already installed on your system, all packages are really easy to find and should be available in any distro.
+Since the script is pretty simple you don't need to install anything other than the dependencies. It's required recent `python` version with some libraries, [v4l2loopback](https://github.com/umlaeute/v4l2loopback), `ffmpeg` and `xorg-xprop` probably are already installed on your system, all packages are really easy to find and should be available in any distro. All `python` libraries can be installed with `pip`.
 
 #### Requeriments
 
 `python3`
+`python3-imageio`
+`python3-pillow`
+`python3-numpy`
 `v4l2loopback`
 `ffmpeg`
 `xorg-xprop`
