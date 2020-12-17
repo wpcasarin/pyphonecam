@@ -1,26 +1,29 @@
-#THIS CODE IS A MESS 
+# THIS CODE IS A MESS
 #
-
-
+from signal import signal, SIGPIPE, SIG_DFL
+from PIL import Image
+from gi.repository import GdkPixbuf as Pixbuf
+from gi.repository import Gdk
+from gi.repository import GdkX11
 import gi
-import cv2 as cv
 import numpy as np
 import subprocess
-import png
-from PIL import Image
+
 
 gi.require_version('Gtk', '3.0')
-from gi.repository import GdkX11
-from gi.repository import Gdk
-from gi.repository import GdkPixbuf as Pixbuf
 
+
+signal(SIGPIPE, SIG_DFL)
 
 win_name = "VLC media player"
 
+
 def get_xid(win_name):
-    
-    xid = int(subprocess.check_output(f"xdotool search --name '{win_name}'", shell=True))
+
+    xid = int(subprocess.check_output(
+        f"xdotool search --name '{win_name}'", shell=True))
     return xid
+
 
 def get_window_from_xid(xid):
     display = GdkX11.X11Display.get_default()
@@ -52,12 +55,12 @@ def pixbuf_to_array(pb):
             b[j, :] = a[r*j:r*j+w*c]
         return b.reshape((h, w, c))
 
+
 xid = get_xid(win_name)
 
-from signal import signal, SIGPIPE, SIG_DFL
-signal(SIGPIPE,SIG_DFL) 
 
-cmd_out = ['ffmpeg','-re','-framerate','30','-y','-i','pipe:0', '-vcodec', 'rawvideo','-pix_fmt', 'yuv420p','-f', 'v4l2', '/dev/video0']
+cmd_out = ['ffmpeg', '-re', '-framerate', '30', '-y', '-i', 'pipe:0',
+           '-vcodec', 'rawvideo', '-pix_fmt', 'yuv420p', '-f', 'v4l2', '/dev/video1']
 
 pipe = subprocess.Popen(cmd_out, stdin=subprocess.PIPE)
 
@@ -67,18 +70,13 @@ try:
         window = get_window_from_xid(xid)
         pb = capture_window(window)
         frame = pixbuf_to_array(pb)
-        #frame = cv.cvtColor(frame, cv.COLOR_RGB2BGR)
-        #cv.imshow("TEST", frame)
 
         img = Image.fromarray(frame, 'RGB')
-        
+
         img.save(pipe.stdin, 'jpeg', quality=100)
-        
-        # if cv.waitKey(1) == ord("q"):
-        #     break
+
 except KeyboardInterrupt:
     pass
 
 
 print("DONE")
-
